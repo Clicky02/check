@@ -1,4 +1,4 @@
-# senòr design
+# Senior Design
 
 ## Installation
 
