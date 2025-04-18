@@ -1,0 +1,53 @@
+{
+    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.extraPaths": ["${workspaceFolder}/backend"],
+    "python.autoComplete.extraPaths": ["${workspaceFolder}/backend"],
+    "editor.formatOnType": false,
+    "python.analysis.packageIndexDepths": [
+        {
+            "name": "sklearn",
+            "depth": 2
+        },
+        {
+            "name": "matplotlib",
+            "depth": 2
+        },
+        {
+            "name": "scipy",
+            "depth": 2
+        },
+        {
+            "name": "django",
+            "depth": 2
+        },
+        {
+            "name": "flask",
+            "depth": 0
+        },
+        {
+            "name": "fastapi",
+            "depth": 2
+        },
+        {
+            "name": "quart",
+            "depth": 3
+        },
+        {
+            "name": "torch",
+            "depth": 5
+        },
+        {
+            "name": "torchvision",
+            "depth": 5
+        }
+    ],
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "always"
+        },
+    },
+    "isort.args":["--profile", "black"],
+}
