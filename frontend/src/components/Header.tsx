@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/joy";
+import { Box, Button, Typography } from "@mui/material";
 import Logo from "assets/logo-5.svg?react";
 import { useNavigate } from "react-router-dom";
 

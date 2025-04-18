@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/joy";
+import { Box, Button } from "@mui/material";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import { useNavigate } from "react-router-dom";
 import PatternBackground from "assets/PatternAsset.png";

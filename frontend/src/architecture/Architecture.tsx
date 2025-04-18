@@ -1,5 +1,7 @@
+import PageBody from "components/layout/PageBody";
+
 function Architecture() {
-    return <>Architectures</>;
+    return <PageBody />;
 }
 
 export default Architecture;
