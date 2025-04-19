@@ -5,7 +5,7 @@ export const CheckApiRequestsEnum = {
     getLayerById: `${CHECK_API_BASE_URL}/layer/get`,
     postLayerOutputSize: `${CHECK_API_BASE_URL}/layer/output_size`,
 
-    getAvailableArchitechture: `${CHECK_API_BASE_URL}/architecture/available`,
+    getAvailableArchitechtures: `${CHECK_API_BASE_URL}/architecture/available`,
     postDeleteArchitecture: `${CHECK_API_BASE_URL}/architecture/delete`,
     getLoadArchitecture: `${CHECK_API_BASE_URL}/architecture/load`,
     postSaveArchitecture: `${CHECK_API_BASE_URL}/architecture/save`,
@@ -39,5 +39,11 @@ export class CheckApi {
 
     static async getAvailableLayers(): Promise<any> {
         return await CheckApi.get<any>(CheckApiRequestsEnum.getAvailableLayers);
+    }
+
+    static async getAvailableArchitectures(): Promise<any> {
+        return await CheckApi.get<any>(CheckApiRequestsEnum.getAvailableArchitechtures).
+            then((response) => response.json())
+            .then((data) => { return data.available })
     }
 }

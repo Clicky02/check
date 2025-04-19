@@ -14,7 +14,7 @@ function PageBody({ topleft, topright, bottomleft, bottomright }: PageBodyProps)
             <Grid size={{ sm: 12, md: 6 }} display={"flex"} alignItems={"center"} justifyContent={"center"}>
                 {topleft}
             </Grid>
-            <Grid size={{ sm: 12, md: 6 }}>
+            <Grid size={{ sm: 12, md: 6 }} display={"flex"} alignItems={"center"} justifyContent={"center"}>
                 {topright}
             </Grid>
         </Grid>
