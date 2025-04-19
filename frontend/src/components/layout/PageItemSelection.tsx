@@ -1,4 +1,4 @@
-import { Box, Button, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
+import { Box, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import { ReactNode, useState } from "react";
 import { availableArchitecture } from "types/architecture-types";
 
@@ -7,20 +7,22 @@ type ItemSelectionEntryProps = {
 }
 
 function ItemSelectionEntry({ entryData }: ItemSelectionEntryProps) {
-    return <ToggleButton value={entryData.id} sx={{ display: "flex", flexDirection: "column" }}>
+    return <ToggleButton value={entryData} sx={{ display: "flex", flexDirection: "column" }}>
         <Typography>{entryData.meta.name}</Typography>
     </ToggleButton>
 }
 
 type PageItemSelectionProps = {
     itemSelectionData: availableArchitecture[] | null;
+    getSelectedEntry: (data: any) => void;
 }
 
-function PageItemSelection({ itemSelectionData }: PageItemSelectionProps) {
+function PageItemSelection({ itemSelectionData, getSelectedEntry }: PageItemSelectionProps) {
     //Handles the currently selected entry in the button group
-    const [selectedID, setselectedID] = useState('list');
-    const handleChange = (event: React.MouseEvent<HTMLElement>, nextID: string) => {
-        setselectedID(nextID)
+    const [selectedEntry, setSelectedEntry] = useState('list');
+    const handleChange = (_event: React.MouseEvent<HTMLElement>, nextID: string) => {
+        setSelectedEntry(nextID);
+        getSelectedEntry(nextID);
     };
 
     // Generate the entries for the selection list
@@ -33,7 +35,7 @@ function PageItemSelection({ itemSelectionData }: PageItemSelectionProps) {
 
 
     return <Box display={"flex"} flexDirection={"column"} width={"75%"}>
-        <ToggleButtonGroup orientation="vertical" value={selectedID} exclusive onChange={handleChange}>
+        <ToggleButtonGroup orientation="vertical" value={selectedEntry} exclusive onChange={handleChange}>
             {itemSelectionEntries}
         </ToggleButtonGroup>
 

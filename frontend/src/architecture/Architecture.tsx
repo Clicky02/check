@@ -1,5 +1,6 @@
 import PageBody from "components/layout/PageBody";
 import PageDescription from "components/layout/PageDescription";
+import PageEntryInfo from "components/layout/PageEntryInfo";
 import PageItemSelection from "components/layout/PageItemSelection";
 import { useEffect, useState } from "react";
 import { CheckApi } from "utils/API-utils";
@@ -16,11 +17,16 @@ function Architecture() {
         getArchitectures();
     }, [])
 
+    const [selectedEntry, setSelectedEntry] = useState(null);
+
+    function getSelectedEntry(data: any) {
+        setSelectedEntry(data);
+    }
+
     return <PageBody
         topleft={<PageDescription title="Architecture" body={descriptionBody} />}
-        topright={<PageItemSelection itemSelectionData={itemSelectionData} />}
-        bottomleft={undefined}
-        bottomright={undefined}
+        topright={<PageItemSelection itemSelectionData={itemSelectionData} getSelectedEntry={getSelectedEntry} />}
+        bottom={<PageEntryInfo selectedEntry={selectedEntry} type="architecture" />}
     />
 }
 

@@ -5,6 +5,7 @@ import Home from "./Home";
 import Header from "components/Header";
 import EditArchitecture from "architecture/EditArchitecture";
 import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
+import Models from "models/Models";
 
 const theme = createTheme({
     palette: {
@@ -27,6 +28,7 @@ function App() {
                         <Route path="/architectures" element={<Architecture />} />
                         <Route path="/editarchitecture" element={<EditArchitecture />} />
                         <Route path="/pipelines" element={<Pipeline />} />
+                        <Route path="/models" element={<Models />} />
                     </Routes>
                 </BrowserRouter>
             </ThemeProvider>

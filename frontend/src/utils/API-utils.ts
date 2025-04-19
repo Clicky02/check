@@ -10,7 +10,11 @@ export const CheckApiRequestsEnum = {
     getLoadArchitecture: `${CHECK_API_BASE_URL}/architecture/load`,
     postSaveArchitecture: `${CHECK_API_BASE_URL}/architecture/save`,
 
-    getAvailableTrainingModels: `${CHECK_API_BASE_URL}/model/train/available`,
+    getAvailablePipelines: `${CHECK_API_BASE_URL}/pipeline/available`,
+
+    getAvailableModels: `${CHECK_API_BASE_URL}/model/available`,
+
+    getTrainingModels: `${CHECK_API_BASE_URL}/model/train/available`,
     getTrainedModelByID: `${CHECK_API_BASE_URL}/model/train/load`,
     getAvailableDevices: `${CHECK_API_BASE_URL}/model/train/devices`,
     deleteTrainingTaskByID: `${CHECK_API_BASE_URL}/model/train/delete`,
@@ -43,6 +47,18 @@ export class CheckApi {
 
     static async getAvailableArchitectures(): Promise<any> {
         return await CheckApi.get<any>(CheckApiRequestsEnum.getAvailableArchitechtures).
+            then((response) => response.json())
+            .then((data) => { return data.available })
+    }
+
+    static async getAvailablePipelines(): Promise<any> {
+        return await CheckApi.get<any>(CheckApiRequestsEnum.getAvailablePipelines).
+            then((response) => response.json())
+            .then((data) => { return data.available })
+    }
+
+    static async getAvailableModels(): Promise<any> {
+        return await CheckApi.get<any>(CheckApiRequestsEnum.getAvailableModels).
             then((response) => response.json())
             .then((data) => { return data.available })
     }
