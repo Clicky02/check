@@ -11,7 +11,7 @@ type PageBodyProps = {
 function PageBody({ topleft, topright, bottomleft, bottomright }: PageBodyProps) {
     return <Box display={"flex"} flexDirection={"column"} height={"100%"}>
         <Grid container spacing={5} flexGrow={1}>
-            <Grid size={{ sm: 12, md: 6 }}>
+            <Grid size={{ sm: 12, md: 6 }} display={"flex"} alignItems={"center"} justifyContent={"center"}>
                 {topleft}
             </Grid>
             <Grid size={{ sm: 12, md: 6 }}>
