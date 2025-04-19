@@ -6,15 +6,15 @@ import { useEffect, useState } from "react";
 import { CheckApi } from "utils/API-utils";
 
 
-const descriptionBody: string = " Select the pipeline you would like to edit, delete, start from scratch with a new pipeline"
-function Pipeline() {
+const descriptionBody: string = " Select the model you would like to train or delete"
+function Models() {
     const [itemSelectionData, setItemSelectionData] = useState(null)
 
     useEffect(() => {
-        async function getPipelines() {
-            await CheckApi.getAvailablePipelines().then((data) => { setItemSelectionData(data) })
+        async function getArchitectures() {
+            await CheckApi.getAvailableModels().then((data) => { setItemSelectionData(data) })
         }
-        getPipelines();
+        getArchitectures();
     }, [])
 
     const [selectedEntry, setSelectedEntry] = useState(null);
@@ -24,11 +24,11 @@ function Pipeline() {
     }
 
     return <PageBody
-        topleft={<PageDescription title="Pipeline" body={descriptionBody} />}
+        topleft={<PageDescription title="Models" body={descriptionBody} />}
         topright={<PageItemSelection itemSelectionData={itemSelectionData} getSelectedEntry={getSelectedEntry} />}
-        bottom={<PageEntryInfo selectedEntry={selectedEntry} type="pipeline" />}
+        bottom={<PageEntryInfo selectedEntry={selectedEntry} type="model" />}
     />
 }
 
 
-export default Pipeline;
+export default Models;
