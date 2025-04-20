@@ -42,24 +42,26 @@ export class CheckApi {
     }
 
     static async getAvailableLayers(): Promise<any> {
-        return await CheckApi.get<any>(CheckApiRequestsEnum.getAvailableLayers);
+        return await CheckApi.get<any>(CheckApiRequestsEnum.getAvailableLayers)
+            .then((response) => response.json())
+            .then((data) => { return data });
     }
 
     static async getAvailableArchitectures(): Promise<any> {
-        return await CheckApi.get<any>(CheckApiRequestsEnum.getAvailableArchitechtures).
-            then((response) => response.json())
+        return await CheckApi.get<any>(CheckApiRequestsEnum.getAvailableArchitechtures)
+            .then((response) => response.json())
             .then((data) => { return data.available })
     }
 
     static async getAvailablePipelines(): Promise<any> {
-        return await CheckApi.get<any>(CheckApiRequestsEnum.getAvailablePipelines).
-            then((response) => response.json())
+        return await CheckApi.get<any>(CheckApiRequestsEnum.getAvailablePipelines)
+            .then((response) => response.json())
             .then((data) => { return data.available })
     }
 
     static async getAvailableModels(): Promise<any> {
-        return await CheckApi.get<any>(CheckApiRequestsEnum.getAvailableModels).
-            then((response) => response.json())
+        return await CheckApi.get<any>(CheckApiRequestsEnum.getAvailableModels)
+            .then((response) => response.json())
             .then((data) => { return data.available })
     }
 }

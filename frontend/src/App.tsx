@@ -9,13 +9,15 @@ import Models from "models/Models";
 
 const theme = createTheme({
     palette: {
-        mode: "dark"
+        mode: "dark",
+        primary: {
+            main: "#fe2e00",
+        },
     }
 });
 
 function App() {
     // const [count, setCount] = useState(0);
-    console.log(theme)
 
     return (
         <>

@@ -1,4 +1,4 @@
-export type availableArchitecture = {
+export type ObjectDescription = {
     id: number,
     info: { version: number }
     meta: { created_at: string, last_modified: string, description: string, name: string }

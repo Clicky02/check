@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Link, Typography } from "@mui/material";
 import Logo from "assets/logo-5.svg?react";
 import { useNavigate } from "react-router-dom";
 
@@ -16,13 +16,18 @@ function Header() {
 
     return (
         <Box width={"100vw"} height={HEADER_HEIGHT} display={"flex"} alignItems={"center"} borderBottom={"1px solid #ffffff"}>
-            <Box display={"flex"} pl={2} gap={2} alignItems={"center"}>
+            <Box display={"flex"} pl={2} gap={5} alignItems={"center"}>
                 <Logo width={27} height={27} />
 
                 {Links.map((val) => (
-                    <Button variant="plain" key={val.name} onClick={() => navigate(val.href)}>
-                        <Typography>{val.name}</Typography>
-                    </Button>
+                    <Typography key={val.name} onClick={() => navigate(val.href)} sx={theme => ({
+                        '&:hover': {
+                            color: theme.palette.primary.main,
+                            cursor: 'pointer'
+                        },
+                    })}>
+                        {val.name}
+                    </Typography>
                 ))}
             </Box>
         </Box>

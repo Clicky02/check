@@ -8,7 +8,7 @@ type PageBodyProps = {
 }
 
 function PageBody({ topleft, topright, bottom }: PageBodyProps) {
-    return <Box display={"flex"} flexDirection={"column"} height={"100%"}>
+    return <Box display={"flex"} flexDirection={"column"} flexGrow={1}>
         <Grid container spacing={5} flexGrow={1}>
             <Grid size={{ sm: 12, md: 6 }} display={"flex"} alignItems={"center"} justifyContent={"center"}>
                 {topleft}
@@ -28,5 +28,3 @@ function PageBody({ topleft, topright, bottom }: PageBodyProps) {
 }
 
 export default PageBody;
-
-// npm install @mui/jo
