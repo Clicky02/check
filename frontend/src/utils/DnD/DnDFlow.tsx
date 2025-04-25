@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useState } from 'react';
 import {
     ReactFlow,
     ReactFlowProvider,
@@ -18,21 +18,12 @@ import '@xyflow/react/dist/style.css';
 import NodeTray from 'components/Nodes/NodeTray';
 import { DnDProvider, useDnD } from './DndContext';
 
-const initialNodes = [
-    {
-        id: '1',
-        type: 'input',
-        data: { label: 'input node' },
-        position: { x: 250, y: 5 },
-    },
-];
-
 let id = 0;
 const getId = () => `dndnode_${id++}`;
 
 const DnDFlow = ({ trayEntries }: any) => {
     const reactFlowWrapper = useRef(null);
-    const [nodes, setNodes, onNodesChange] = useNodesState<Node>(initialNodes);
+    const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
     const { screenToFlowPosition } = useReactFlow();
     const [type, setType] = useDnD();
@@ -112,3 +103,90 @@ function DnDThing({ trayEntries }: any) {
 }
 
 export default DnDThing;
+
+
+// function create_editor() {
+
+// }
+
+// import { createStore, useStore } from 'zustand'
+// import { immer } from 'zustand/middleware/immer'
+// import { LayerDescription } from 'types/layer-types';
+
+// type ArchEditorState = {
+//     inputId: number | null;
+//     outputId: number | null;
+//     nodes: {
+//         [id: number]: {
+//             layerTypeId: string;
+//             inputId: number | null;
+//             outputId: number | null;
+//             param_values: any,
+//             position: { x: number, y: number }
+//         }
+//     }
+//     layers: { [id: string]: LayerDescription }
+
+// }
+
+// function createEditorStore() {
+
+//     let a = immer((set) => ({
+//         state: {
+//             inputId: null,
+//             outputId: null,
+//             nodes: {},
+//             layers: {},
+//         } as ArchEditorState,
+//         api: {
+//             addNode: (layerTypeId: string, position: { x: number, y: number }) => {
+//                 set((state) => {
+//                     const newId = Object.keys(state.nodes).length + 1;
+//                     state.nodes[newId] = {
+//                         layerTypeId,
+//                         inputId: null,
+//                         outputId: null,
+//                         param_values: {},
+//                         position
+//                     };
+//                 });
+//             },
+//             removeNode: (id: number) => {
+//                 set((state) => {
+//                     delete state.nodes[id];
+//                 });
+//             },
+//             setInputId: (id: number) => {
+//                 set((state) => {
+//                     state.inputId = id;
+//                 });
+//             },
+//             setOutputId: (id: number) => {
+//                 set((state) => {
+//                     state.outputId = id;
+//                 });
+//             },
+//         }
+//     }))
+//     return createStore()
+// }
+
+// const ArchEditorContext = React.createContext(null)
+
+// const EditorProvider = ({ layers }) => {
+//     const [store] = useState(() =>
+//         createStore((set) => ({
+//             input: initialBears,
+//             actions: {
+//                 increasePopulation: (by) => set((state) => ({ bears: state.bears + by })),
+//                 removeAllBears: () => set({ bears: 0 }),
+//             },
+//         }))
+//     )
+
+//     return (
+//         <ArchEditorContext.Provider value={store}>
+//             {children}
+//         </ArchEditorContext.Provider>
+//     )
+// }

@@ -1,4 +1,4 @@
-export const CHECK_API_BASE_URL = 'http://localhost:7777/api';
+export const CHECK_API_BASE_URL = 'http://192.168.191.34:7777/api';
 
 export const CheckApiRequestsEnum = {
     getAvailableLayers: `${CHECK_API_BASE_URL}/layer/available`,
