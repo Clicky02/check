@@ -10,7 +10,7 @@ function NodeTray() {
     if (layers != null) {
         for (const layer in layers) {
             const data = layers[layer];
-            entries.push(<NodeTrayEntry data={data} />);
+            entries.push(<NodeTrayEntry key={data.id} data={data} />);
         }
     }
 

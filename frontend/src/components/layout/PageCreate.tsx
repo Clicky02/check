@@ -1,6 +1,6 @@
 import { Box, TextField, Button } from "@mui/material";
 
-function PageCreate({ pageType }) {
+function PageCreate({ pageType }: { pageType: string }) {
     return (
         <Box display={"flex"} flexDirection={"row"} width={"70%"} gap={"75px"}>
             <TextField label="Name" />

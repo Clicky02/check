@@ -1,7 +1,6 @@
 import { Paper, Typography } from "@mui/material";
 import { useEditorStore } from "architecture/ArchStore";
 import { LayerDescription } from "types/layer-types";
-import { useDnD } from "utils/DnD/DndContext";
 
 type NodeTrayEntryProps = {
     data: LayerDescription;
@@ -9,7 +8,6 @@ type NodeTrayEntryProps = {
 
 function NodeTrayEntry({ data }: NodeTrayEntryProps) {
     const editorAPI = useEditorStore((state) => state.api);
-
     const onDragStart = (event: React.DragEvent, nodeType: string) => {
         editorAPI.setSelectedLayerType(nodeType);
         event.dataTransfer!.effectAllowed = "move";

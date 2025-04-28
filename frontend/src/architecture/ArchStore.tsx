@@ -79,6 +79,16 @@ function createInitialStore() {
                         }
                     }),
 
+                disconnectNodes: (sourceId: string, targetId: string) =>
+                    set((state) => {
+                        const sourceNode = state.nodes[sourceId];
+                        const targetNode = state.nodes[targetId];
+                        if (sourceNode && targetNode) {
+                            sourceNode.outputId = null;
+                            targetNode.inputId = null;
+                        }
+                    }),
+
                 setInputId: (id: string) =>
                     set((state) => {
                         state.inputId = id;
@@ -121,10 +131,7 @@ type ArchEditorProviderProps = {
 export const ArchEditorProvider = ({ layers, children }: ArchEditorProviderProps) => {
     const [store] = useState(() => createEditorStore());
 
-    useEffect(() => {
-        console.log("LAYERS", layers);
-        store.getState().api.setAvailableLayers(layers);
-    }, [store, layers]);
+    useEffect(() => store.getState().api.setAvailableLayers(layers), [store, layers]);
 
     // TODO: REMOVE ReactFlowProvider???????
     return (

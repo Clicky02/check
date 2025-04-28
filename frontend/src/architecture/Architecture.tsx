@@ -3,7 +3,7 @@ import PageDescription from "components/layout/PageDescription";
 import PageEntryInfo from "components/layout/PageEntryInfo";
 import PageItemSelection from "components/layout/PageItemSelection";
 import PageCreate from "components/layout/PageCreate";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { ObjectDescription } from "types/architecture-types";
 import { CheckApi } from "utils/API-utils";
 import ArchitectureEntryInfo from "./ArchitectureEntryInfo";
@@ -24,7 +24,7 @@ function Architecture() {
     }, []);
 
     const [selectedEntry, setSelectedEntry] = useState<ObjectDescription | null>(null);
-    const [createArchitecture, setCreateArchitecture] = useState<bool>(false);
+    const [createArchitecture, setCreateArchitecture] = useState<boolean>(false);
 
     const onSelect = (data: any) => {
         setCreateArchitecture(false);

@@ -1,8 +1,8 @@
-import { Box, CircularProgress } from "@mui/material";
 import "@xyflow/react/dist/style.css";
+
+import { Box, CircularProgress } from "@mui/material";
 import NodeTray from "components/Nodes/NodeTray";
-import NodeTrayEntry from "components/Nodes/NodeTrayEntry";
-import { ReactNode, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { LayerDescription } from "types/layer-types";
 import { CheckApi } from "utils/API-utils";
 import { useParams } from "react-router-dom";
@@ -16,8 +16,9 @@ function EditArchitecture() {
 
     useEffect(() => {
         if (id != undefined) {
-            CheckApi.getArchitectureByID(parseInt(id)).then((data) => {
-                console.log(data);
+            CheckApi.getArchitectureByID(parseInt(id)).then((_data) => {
+                // console.log(data);
+                // TODO
             });
         }
 

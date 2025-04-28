@@ -1,7 +1,7 @@
 import "@xyflow/react/dist/style.css";
 
-import React, { useCallback, useEffect, useMemo } from "react";
-import { ReactFlow, Controls, useReactFlow, Background, Node, OnNodesChange, OnConnect } from "@xyflow/react";
+import React, { useCallback, useMemo } from "react";
+import { ReactFlow, Controls, useReactFlow, Background, OnNodesChange, OnConnect, OnEdgesChange, Edge } from "@xyflow/react";
 import { useEditorStore } from "./ArchStore";
 import LayerNode from "components/Nodes/ArchitectureLayerNode";
 
@@ -28,7 +28,7 @@ export const ArchFlow = () => {
         [nodes]
     );
     const flowEdges = useMemo(() => {
-        const edges: any[] = [];
+        const edges: Edge[] = [];
 
         Object.keys(nodes).forEach((key) => {
             const node = nodes[key];
@@ -37,15 +37,7 @@ export const ArchFlow = () => {
                     id: `${node.inputId}-${key}`,
                     source: node.inputId,
                     target: key,
-                    type: "smoothstep",
-                });
-            }
-            if (node.outputId) {
-                edges.push({
-                    id: `${key}-${node.outputId}`,
-                    source: key,
-                    target: node.outputId,
-                    type: "smoothstep",
+                    deletable: true,
                 });
             }
         });
@@ -53,10 +45,10 @@ export const ArchFlow = () => {
         return edges;
     }, [nodes]);
 
-    const onConnect = useCallback<OnConnect>((connection) => {
-        console.log("CONNECT");
-        editorAPI.connectNodes(connection.source, connection.target);
-    }, []);
+    const onConnect = useCallback<OnConnect>(
+        (connection) => editorAPI.connectNodes(connection.source, connection.target),
+        [editorAPI]
+    );
 
     const onDragOver = useCallback((event: React.DragEvent) => {
         event.preventDefault();
@@ -96,8 +88,21 @@ export const ArchFlow = () => {
                         break;
                 }
             }),
+        [editorAPI]
+    );
+    const onEdgesChange = useCallback<OnEdgesChange>(
+        (changes) =>
+            changes.forEach((val) => {
+                switch (val.type) {
+                    case "remove":
+                        const [sourceId, targetId] = val.id.split("-");
+                        console.log("REMOVE", val.id, sourceId, targetId);
+                        editorAPI.disconnectNodes(sourceId, targetId);
+                        break;
+                }
+            }),
         []
-    ); // [setNodes]
+    );
 
     const nodeTypes = useMemo(() => ({ layer: LayerNode }), []);
     return (
@@ -105,13 +110,12 @@ export const ArchFlow = () => {
             nodes={flowNodes}
             edges={flowEdges}
             onNodesChange={onNodesChange}
-            onEdgesChange={() => console.log("changed")}
+            onEdgesChange={onEdgesChange}
             onConnect={onConnect}
             onDrop={onDrop}
             // @ts-ignore
             onDragOver={onDragOver}
             nodeTypes={nodeTypes}
-            fitView
             style={{}}
         >
             <Controls />

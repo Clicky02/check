@@ -1,22 +1,18 @@
-import { Box, Checkbox, FormControlLabel, Input, TextField, Typography } from "@mui/material";
-import { ReactNode } from "react";
+import { Box, Checkbox, FormControlLabel, TextField, Typography } from "@mui/material";
 import { Parameter, ParameterTypeEnum } from "utils/parameters";
 
 type NodeParameterProps = { parameter: Parameter<any> };
 
 function NodeParameter({ parameter }: NodeParameterProps) {
-    let parameterComp: ReactNode;
-
     switch (parameter.type) {
         case ParameterTypeEnum.Bool:
-            parameterComp = (
+            return (
                 <Box>
                     <FormControlLabel control={<Checkbox />} label={parameter.name} />
                 </Box>
             );
-            break;
         case ParameterTypeEnum.Float:
-            parameterComp = (
+            return (
                 <Box>
                     <TextField
                         label={parameter.name}
@@ -26,9 +22,8 @@ function NodeParameter({ parameter }: NodeParameterProps) {
                     ></TextField>
                 </Box>
             );
-            break;
         case ParameterTypeEnum.Int:
-            parameterComp = (
+            return (
                 <Box>
                     <TextField
                         label={parameter.name}
@@ -38,16 +33,14 @@ function NodeParameter({ parameter }: NodeParameterProps) {
                     ></TextField>
                 </Box>
             );
-            break;
         case ParameterTypeEnum.Size2D:
-            parameterComp = (
+            return (
                 <Box>
                     <Typography>{parameter.name}</Typography>
                 </Box>
             );
-            break;
         case ParameterTypeEnum.String:
-            parameterComp = (
+            return (
                 <Box>
                     <TextField
                         label={parameter.name}
@@ -57,10 +50,7 @@ function NodeParameter({ parameter }: NodeParameterProps) {
                     ></TextField>
                 </Box>
             );
-            break;
     }
-
-    return <>{parameterComp}</>;
 }
 
 export default NodeParameter;

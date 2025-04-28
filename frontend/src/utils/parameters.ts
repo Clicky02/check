@@ -10,7 +10,7 @@ export const ParameterTypeEnum = {
 
 export type ParameterType = ValueOf<typeof ParameterTypeEnum>;
 
-export type ParameterId = number;
+export type ParameterId = string;
 export type ParameterName = string;
 
 export type Parameter<T> = {
@@ -19,7 +19,7 @@ export type Parameter<T> = {
     // TODO: CONSTRAINTS 
     // constraint: AnyConstraint<T> | undefined, 
     constraint: any,
-    default: ParameterValue<any> | undefined,
+    default: ParameterValue<T> | undefined,
     type: ParameterType,
 }
 

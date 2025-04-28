@@ -4,42 +4,38 @@ import { ObjectDescription } from "types/architecture-types";
 
 type ItemSelectionEntryProps = {
     entryData: ObjectDescription;
-}
+};
 
 function ItemSelectionEntry({ entryData }: ItemSelectionEntryProps) {
-    return <ToggleButton value={entryData} sx={{ display: "flex", flexDirection: "column" }}>
-        <Typography>{entryData.meta.name}</Typography>
-    </ToggleButton>
+    return (
+        <ToggleButton value={entryData} sx={{ display: "flex", flexDirection: "column" }}>
+            <Typography>{entryData.meta.name}</Typography>
+        </ToggleButton>
+    );
 }
 
 type PageItemSelectionProps = {
     itemSelectionData: ObjectDescription[] | null;
-    selectedEntry: any
+    selectedEntry: any;
     onSelect: (data: any) => void;
-}
+};
 
 function PageItemSelection({ itemSelectionData, selectedEntry, onSelect }: PageItemSelectionProps) {
-    //Handles the currently selected entry in the button group
-    const handleChange = (_event: React.MouseEvent<HTMLElement>, nextID: string) => {
-        onSelect(nextID);
-    };
-
     // Generate the entries for the selection list
-    let itemSelectionEntries: ReactNode[] = []
+    let itemSelectionEntries: ReactNode[] = [];
     if (itemSelectionData != null) {
         for (let i = 0; i < itemSelectionData.length; i++) {
             itemSelectionEntries.push(<ItemSelectionEntry entryData={itemSelectionData[i]} />);
         }
     }
 
-
-    return <Box display={"flex"} flexDirection={"column"} width={"75%"}>
-        <ToggleButtonGroup orientation="vertical" value={selectedEntry} exclusive onChange={handleChange}>
-            {itemSelectionEntries}
-        </ToggleButtonGroup>
-
-    </ Box >
+    return (
+        <Box display={"flex"} flexDirection={"column"} width={"75%"}>
+            <ToggleButtonGroup orientation="vertical" value={selectedEntry} exclusive onChange={(_, nextID) => onSelect(nextID)}>
+                {itemSelectionEntries}
+            </ToggleButtonGroup>
+        </Box>
+    );
 }
 
 export default PageItemSelection;
-
