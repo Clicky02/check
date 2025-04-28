@@ -1,17 +1,31 @@
 import { Box } from "@mui/material";
+import { useEditorStore } from "architecture/ArchStore";
 import { ReactNode } from "react";
+import NodeTrayEntry from "./NodeTrayEntry";
 
-type NodeTrayProps = {
-    nodes: ReactNode[]
-}
+function NodeTray() {
+    let layers = useEditorStore((state) => state.layers);
 
-function NodeTray({ nodes }: NodeTrayProps) {
+    let entries: ReactNode[] = [];
+    if (layers != null) {
+        for (const layer in layers) {
+            const data = layers[layer];
+            entries.push(<NodeTrayEntry data={data} />);
+        }
+    }
+
     return (
-        <Box width={"250px"} height={"100%"} maxHeight={"100%"}
+        <Box
+            width={"250px"}
+            height={"100%"}
+            maxHeight={"100%"}
             sx={{ backgroundColor: "black", gap: "15px", padding: "15px" }}
-            display={"flex"} flexDirection={"column"} alignItems={"center"} overflow={"auto"}
+            display={"flex"}
+            flexDirection={"column"}
+            alignItems={"center"}
+            overflow={"auto"}
         >
-            {nodes}
+            {entries}
         </Box>
     );
 }

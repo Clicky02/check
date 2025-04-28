@@ -1,5 +1,4 @@
 import { Box, Button } from "@mui/material";
-import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import { useNavigate } from "react-router-dom";
 import PatternBackground from "assets/PatternAsset.png";
 import { STYLE } from "utils/style";
@@ -22,10 +21,10 @@ function Home() {
                 <Logo width={321} height={321} />
             </Box>
             <Box display={"flex"} sx={{ width: "50%", height: "fit-content", gap: 4 }}>
-                <Button variant="outlined" endDecorator={<KeyboardArrowRight />} onClick={() => navigate("/architectures")}>
+                <Button variant="outlined" onClick={() => navigate("/architectures")}>
                     Architectures
                 </Button>
-                <Button variant="outlined" endDecorator={<KeyboardArrowRight />} onClick={() => navigate("/pipelines")}>
+                <Button variant="outlined" onClick={() => navigate("/pipelines")}>
                     Pipelines
                 </Button>
             </Box>

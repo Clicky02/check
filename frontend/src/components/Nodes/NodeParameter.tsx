@@ -1,49 +1,66 @@
-import { Box, Checkbox, Input, Typography } from "@mui/material";
+import { Box, Checkbox, FormControlLabel, Input, TextField, Typography } from "@mui/material";
 import { ReactNode } from "react";
 import { Parameter, ParameterTypeEnum } from "utils/parameters";
 
-type NodeParameterProps = { parameter: Parameter<any> }
+type NodeParameterProps = { parameter: Parameter<any> };
 
 function NodeParameter({ parameter }: NodeParameterProps) {
     let parameterComp: ReactNode;
 
     switch (parameter.type) {
         case ParameterTypeEnum.Bool:
-            parameterComp = <Box>
-                <Typography>{parameter.name}</Typography>
-                <Checkbox></Checkbox>
-            </Box>
+            parameterComp = (
+                <Box>
+                    <FormControlLabel control={<Checkbox />} label={parameter.name} />
+                </Box>
+            );
             break;
         case ParameterTypeEnum.Float:
-            parameterComp = <Box>
-                <Typography>{parameter.name}</Typography>
-                <Input inputProps={{ type: 'number' }}></Input>
-            </Box>
+            parameterComp = (
+                <Box>
+                    <TextField
+                        label={parameter.name}
+                        defaultValue={parameter.default}
+                        slotProps={{ htmlInput: { type: "number" } }}
+                        size="small"
+                    ></TextField>
+                </Box>
+            );
             break;
         case ParameterTypeEnum.Int:
-            parameterComp = <Box>
-                <Typography>{parameter.name}</Typography>
-                <Input inputProps={{ type: 'number' }}></Input>
-            </Box>
+            parameterComp = (
+                <Box>
+                    <TextField
+                        label={parameter.name}
+                        defaultValue={parameter.default}
+                        slotProps={{ htmlInput: { type: "number" } }}
+                        size="small"
+                    ></TextField>
+                </Box>
+            );
             break;
         case ParameterTypeEnum.Size2D:
-            parameterComp = <Box>
-                <Typography>{parameter.name}</Typography>
-            </Box>
+            parameterComp = (
+                <Box>
+                    <Typography>{parameter.name}</Typography>
+                </Box>
+            );
             break;
         case ParameterTypeEnum.String:
-            parameterComp = <Box>
-                <Typography>{parameter.name}</Typography>
-                <Input inputProps={{ type: 'string' }}></Input>
-            </Box>
+            parameterComp = (
+                <Box>
+                    <TextField
+                        label={parameter.name}
+                        defaultValue={parameter.default}
+                        slotProps={{ htmlInput: { type: "string" } }}
+                        size="small"
+                    ></TextField>
+                </Box>
+            );
             break;
     }
 
-    return (
-        <>
-            {parameterComp}
-        </>
-    );
+    return <>{parameterComp}</>;
 }
 
 export default NodeParameter;

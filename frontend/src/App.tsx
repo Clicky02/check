@@ -13,7 +13,7 @@ const theme = createTheme({
         primary: {
             main: "#fe2e00",
         },
-    }
+    },
 });
 
 function App() {
@@ -21,14 +21,14 @@ function App() {
 
     return (
         <>
-            <ThemeProvider theme={theme} >
+            <ThemeProvider theme={theme}>
                 <CssBaseline />
                 <BrowserRouter>
                     <Header />
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/architectures" element={<Architecture />} />
-                        <Route path="/editarchitecture" element={<EditArchitecture />} />
+                        <Route path="/architectures/editarchitecture/:id" element={<EditArchitecture />} />
                         <Route path="/pipelines" element={<Pipeline />} />
                         <Route path="/models" element={<Models />} />
                     </Routes>

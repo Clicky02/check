@@ -1,4 +1,4 @@
-export const CHECK_API_BASE_URL = 'http://192.168.191.34:7777/api';
+export const CHECK_API_BASE_URL = 'http://192.168.191.64:7777/api';
 
 export const CheckApiRequestsEnum = {
     getAvailableLayers: `${CHECK_API_BASE_URL}/layer/available`,
@@ -9,6 +9,7 @@ export const CheckApiRequestsEnum = {
     postDeleteArchitecture: `${CHECK_API_BASE_URL}/architecture/delete`,
     getLoadArchitecture: `${CHECK_API_BASE_URL}/architecture/load`,
     postSaveArchitecture: `${CHECK_API_BASE_URL}/architecture/save`,
+
 
     getAvailablePipelines: `${CHECK_API_BASE_URL}/pipeline/available`,
 
@@ -22,8 +23,8 @@ export const CheckApiRequestsEnum = {
 
 export class CheckApi {
 
-    static async get<T>(api_url: string): Promise<T> {
-        return await fetch(api_url, {
+    static async get<T>(api_url: string, params: {} = {}): Promise<T> {
+        return await fetch(api_url + "?" + new URLSearchParams(params), {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -61,6 +62,12 @@ export class CheckApi {
 
     static async getAvailableModels(): Promise<any> {
         return await CheckApi.get<any>(CheckApiRequestsEnum.getAvailableModels)
+            .then((response) => response.json())
+            .then((data) => { return data.available })
+    }
+
+    static async getArchitectureByID(id: number): Promise<any> {
+        return await CheckApi.get<any>(CheckApiRequestsEnum.getLoadArchitecture, { id: id })
             .then((response) => response.json())
             .then((data) => { return data.available })
     }
