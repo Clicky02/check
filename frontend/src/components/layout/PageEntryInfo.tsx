@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { FC, ReactNode } from "react";
-import { ObjectDescription } from "types/architecture-types";
+import { ObjectDescription } from "utils/types/object";
 
 type PageEntryInfoProps = {
     selectedEntry: ObjectDescription | null;

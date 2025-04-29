@@ -3,16 +3,19 @@ import PageDescription from "components/layout/PageDescription";
 import PageEntryInfo from "components/layout/PageEntryInfo";
 import PageItemSelection from "components/layout/PageItemSelection";
 import PageCreate from "components/layout/PageCreate";
-import { ReactNode, useEffect, useState } from "react";
-import { ObjectDescription } from "types/architecture-types";
+import { useEffect, useState } from "react";
+import { ObjectDescription } from "utils/types/object";
 import { CheckApi } from "utils/API-utils";
 import ArchitectureEntryInfo from "./ArchitectureEntryInfo";
 import { Button, Box } from "@mui/material";
 
 const descriptionBody: string =
     " Select the architecture you would like to edit, delete, or convert to a model or start from scratch with a new architecture";
-function Architecture() {
+
+function ArchitectureHomePage() {
     const [itemSelectionData, setItemSelectionData] = useState(null);
+    const [selectedEntry, setSelectedEntry] = useState<ObjectDescription | null>(null);
+    const [createArchitecture, setCreateArchitecture] = useState<boolean>(false);
 
     useEffect(() => {
         async function getArchitectures() {
@@ -23,21 +26,6 @@ function Architecture() {
         getArchitectures();
     }, []);
 
-    const [selectedEntry, setSelectedEntry] = useState<ObjectDescription | null>(null);
-    const [createArchitecture, setCreateArchitecture] = useState<boolean>(false);
-
-    const onSelect = (data: any) => {
-        setCreateArchitecture(false);
-        setSelectedEntry(data);
-    };
-    let bottomComponent: ReactNode;
-    if (createArchitecture == false) {
-        bottomComponent = (
-            <PageEntryInfo selectedEntry={selectedEntry} type="architecture" EntryComponent={ArchitectureEntryInfo} />
-        );
-    } else {
-        bottomComponent = <PageCreate pageType={"Architecture"} />;
-    }
     return (
         <PageBody
             topleft={
@@ -56,11 +44,24 @@ function Architecture() {
                 </Box>
             }
             topright={
-                <PageItemSelection itemSelectionData={itemSelectionData} selectedEntry={selectedEntry} onSelect={onSelect} />
+                <PageItemSelection
+                    itemSelectionData={itemSelectionData}
+                    selectedEntry={selectedEntry}
+                    onSelect={(data: any) => {
+                        setCreateArchitecture(false);
+                        setSelectedEntry(data);
+                    }}
+                />
             }
-            bottom={bottomComponent}
+            bottom={
+                createArchitecture ? (
+                    <PageCreate pageType={"Architecture"} />
+                ) : (
+                    <PageEntryInfo selectedEntry={selectedEntry} type="architecture" EntryComponent={ArchitectureEntryInfo} />
+                )
+            }
         />
     );
 }
 
-export default Architecture;
+export default ArchitectureHomePage;

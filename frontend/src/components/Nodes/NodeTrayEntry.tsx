@@ -1,6 +1,6 @@
 import { Paper, Typography } from "@mui/material";
 import { useEditorStore } from "architecture/ArchStore";
-import { LayerDescription } from "types/layer-types";
+import { LayerDescription } from "types/layer";
 
 type NodeTrayEntryProps = {
     data: LayerDescription;

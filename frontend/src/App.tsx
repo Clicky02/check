@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Architecture from "./architecture/Architecture";
+import ArchitectureHomePage from "./architecture/HomePage";
 import Pipeline from "./pipeline/Pipeline";
 import Home from "./Home";
 import Header from "components/Header";
@@ -27,7 +27,7 @@ function App() {
                     <Header />
                     <Routes>
                         <Route path="/" element={<Home />} />
-                        <Route path="/architectures" element={<Architecture />} />
+                        <Route path="/architectures" element={<ArchitectureHomePage />} />
                         <Route path="/architectures/editarchitecture/:id" element={<EditArchitecture />} />
                         <Route path="/pipelines" element={<Pipeline />} />
                         <Route path="/models" element={<Models />} />

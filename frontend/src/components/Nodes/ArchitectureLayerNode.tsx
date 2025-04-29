@@ -1,40 +1,41 @@
 import { Handle, NodeProps, Position } from "@xyflow/react";
-import { Accordion, AccordionDetails, AccordionSummary, Paper, Typography } from "@mui/material";
-import { useEditorStore } from "architecture/ArchStore";
-import NodeParameter from "./NodeParameter";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { STYLE } from "utils/style";
+import { LayerNodeInfo, useEditorStore } from "architecture/ArchStore";
+import ParameterField from "../../param/ParameterField";
+import { BaseNode, validateNode } from "./BaseNode";
+import { Typography } from "@mui/material";
 
-function LayerNode({ data, selected }: NodeProps) {
-    let id = data.id as number;
-    let node = useEditorStore((state) => state.nodes[id]);
-    let layer = useEditorStore((state) => node && state.layers[node.layerTypeId]);
+export const ArchLayerNode = ({ data, selected }: NodeProps) => {
+    const id = data.id as string;
+    const node = useEditorStore((state) => state.nodes[id]);
+    const layer = useEditorStore((state) => node && node.type === "layer" && state.layers[node.layerTypeId]);
+    const editorAPI = useEditorStore((state) => state.api);
 
-    if (node === undefined) {
-        return <Paper>Could not find Node.</Paper>;
-    } else if (layer === undefined) {
-        return <Paper>Invalid layer type {node.layerTypeId}.</Paper>;
-    }
+    const [title, content] = validateNode<LayerNodeInfo>(node, "layer", (node) => {
+        if (!layer) {
+            return [undefined, <Typography>Invalid layer type '{node.layerTypeId}'.</Typography>];
+        } else {
+            return [
+                layer.name,
+                layer.parameters.map((param) => (
+                    <ParameterField
+                        key={param.id}
+                        parameter={param}
+                        value={node.param_values[param.id]?.val}
+                        onChange={(newVal) => editorAPI.updateParameterValue(id, param.id, newVal)}
+                    />
+                )),
+            ];
+        }
+    });
 
     return (
         <>
-            <Accordion sx={{ border: selected ? STYLE.separator : undefined }}>
-                <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1-content" id="panel1-header">
-                    <Typography align="center" variant="h5">
-                        {layer.name}
-                    </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                    {layer.parameters.map((param) => (
-                        <NodeParameter key={param.id} parameter={param} />
-                    ))}
-                </AccordionDetails>
-            </Accordion>
+            <BaseNode title={title} selected={selected} foldable>
+                {content}
+            </BaseNode>
 
             <Handle type="source" position={Position.Right} id="output" />
             <Handle type="target" position={Position.Left} id="input" />
         </>
     );
-}
-
-export default LayerNode;
+};

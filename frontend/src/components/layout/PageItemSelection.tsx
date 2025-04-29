@@ -1,6 +1,6 @@
 import { Box, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import { ReactNode } from "react";
-import { ObjectDescription } from "types/architecture-types";
+import { ObjectDescription } from "utils/types/object";
 
 type ItemSelectionEntryProps = {
     entryData: ObjectDescription;

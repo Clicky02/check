@@ -3,11 +3,11 @@ import "@xyflow/react/dist/style.css";
 import { Box, CircularProgress } from "@mui/material";
 import NodeTray from "components/Nodes/NodeTray";
 import { useEffect, useState } from "react";
-import { LayerDescription } from "types/layer-types";
 import { CheckApi } from "utils/API-utils";
 import { useParams } from "react-router-dom";
 import { ArchFlow } from "./ArchFlow";
 import { ArchEditorProvider } from "./ArchStore";
+import { LayerDescription } from "./types";
 
 function EditArchitecture() {
     const [layerData, setLayerData] = useState<LayerDescription[] | null>(null);

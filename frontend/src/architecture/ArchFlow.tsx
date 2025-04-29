@@ -3,7 +3,9 @@ import "@xyflow/react/dist/style.css";
 import React, { useCallback, useMemo } from "react";
 import { ReactFlow, Controls, useReactFlow, Background, OnNodesChange, OnConnect, OnEdgesChange, Edge } from "@xyflow/react";
 import { useEditorStore } from "./ArchStore";
-import LayerNode from "components/Nodes/ArchitectureLayerNode";
+import { ArchOutputNode } from "components/Nodes/ArchitectureOutputNode";
+import { ArchLayerNode } from "components/Nodes/ArchitectureLayerNode";
+import { ArchInputNode } from "components/Nodes/ArchitectureInputNode";
 
 export const ArchFlow = () => {
     const { screenToFlowPosition } = useReactFlow();
@@ -15,18 +17,32 @@ export const ArchFlow = () => {
         () =>
             Object.keys(nodes).map((key) => {
                 const node = nodes[key];
-                return {
-                    id: key,
-                    type: "layer",
-                    position: node.position,
-                    selected: node.selected,
-                    data: {
+                if (node.type == "layer") {
+                    return {
                         id: key,
-                    },
-                };
+                        type: "layer",
+                        position: node.position,
+                        selected: node.selected,
+                        data: {
+                            id: key,
+                        },
+                    };
+                } else {
+                    return {
+                        id: key,
+                        type: "io",
+                        position: node.position,
+                        selected: node.selected,
+                        data: {
+                            id: key,
+                            iotype: node.type,
+                        },
+                    };
+                }
             }),
         [nodes]
     );
+
     const flowEdges = useMemo(() => {
         const edges: Edge[] = [];
 
@@ -62,7 +78,7 @@ export const ArchFlow = () => {
                 return;
             }
 
-            editorAPI.addNode(
+            editorAPI.addLayerNode(
                 type,
                 screenToFlowPosition({
                     x: event.clientX,
@@ -104,7 +120,7 @@ export const ArchFlow = () => {
         []
     );
 
-    const nodeTypes = useMemo(() => ({ layer: LayerNode }), []);
+    const nodeTypes = useMemo(() => ({ layer: ArchLayerNode, input: ArchInputNode, output: ArchOutputNode }), []);
     return (
         <ReactFlow
             nodes={flowNodes}

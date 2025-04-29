@@ -1,23 +1,90 @@
 import { createStore, useStore } from "zustand";
-import { LayerDescription } from "types/layer-types";
 import { combineImmer } from "utils/combineImmer";
 import { createContext, useContext, useEffect, useState } from "react";
 import { ReactFlowProvider } from "@xyflow/react";
+import { LayerDescription } from "./types";
+import { AnyParameterValue, TensorSize } from "param/types";
 
-type ArchEditorState = {
+export type BaseNodeInfo = {
+    inputId: string | null;
+    outputId: string | null;
+    position: { x: number; y: number };
+    selected: boolean;
+};
+
+export type LayerNodeInfo = BaseNodeInfo & {
+    type: "layer";
+    layerTypeId: string;
+    param_values: { [id: string]: AnyParameterValue };
+};
+
+function LayerNodeInfo(
+    layerTypeId: string,
+    position: { x: number; y: number },
+    inputId: string | null = null,
+    outputId: string | null = null,
+    param_values: any = {},
+    selected: boolean = false
+): LayerNodeInfo {
+    return {
+        type: "layer",
+        layerTypeId,
+        inputId,
+        outputId,
+        position,
+        param_values,
+        selected,
+    };
+}
+
+export type InputNodeInfo = BaseNodeInfo & {
+    type: "input";
+    size: TensorSize;
+};
+
+function InputNodeInfo(
+    size: TensorSize,
+    position: { x: number; y: number },
+    inputId: string | null = null,
+    outputId: string | null = null,
+    selected: boolean = false
+): InputNodeInfo {
+    return {
+        type: "input",
+        size,
+        inputId,
+        outputId,
+        position,
+        selected,
+    };
+}
+
+export type OutputNodeInfo = BaseNodeInfo & {
+    type: "output";
+};
+
+function OutputNodeInfo(
+    position: { x: number; y: number },
+    inputId: string | null = null,
+    outputId: string | null = null,
+    selected: boolean = false
+): OutputNodeInfo {
+    return {
+        type: "output",
+        inputId,
+        outputId,
+        position,
+        selected,
+    };
+}
+
+export type NodeInfo = LayerNodeInfo | InputNodeInfo | OutputNodeInfo;
+
+export type ArchEditorState = {
     selectedLayerType: string | null;
     inputId: string | null;
     outputId: string | null;
-    nodes: {
-        [id: string]: {
-            layerTypeId: string;
-            inputId: string | null;
-            outputId: string | null;
-            param_values: any;
-            position: { x: number; y: number };
-            selected: boolean;
-        };
-    };
+    nodes: { [id: string]: NodeInfo };
     layers: { [id: string]: LayerDescription };
     nextId: number;
 };
@@ -35,17 +102,10 @@ function createInitialStore() {
         } as ArchEditorState,
         (set, get) => ({
             api: {
-                addNode: (layerTypeId: string, position: { x: number; y: number }) =>
+                addLayerNode: (layerTypeId: string, position: { x: number; y: number }) =>
                     set((state) => {
                         const newId = state.nextId++;
-                        state.nodes[newId.toString()] = {
-                            layerTypeId,
-                            inputId: null,
-                            outputId: null,
-                            param_values: {},
-                            position,
-                            selected: false,
-                        };
+                        state.nodes[newId.toString()] = LayerNodeInfo(layerTypeId, position);
                     }),
 
                 removeNode: (id: string) =>
@@ -61,6 +121,22 @@ function createInitialStore() {
                         });
                     }
                 },
+
+                updateParameterValue: (id: string, paramId: string, value: AnyParameterValue) =>
+                    set((state) => {
+                        const node = state.nodes[id];
+                        if (node && node.type === "layer") {
+                            node.param_values[paramId] = value;
+                        }
+                    }),
+
+                updateInputSize: (id: string, size: TensorSize) =>
+                    set((state) => {
+                        const node = state.nodes[id];
+                        if (node && node.type === "input") {
+                            node.size = size;
+                        }
+                    }),
 
                 setNodeSelected: (id: string, selected: boolean) =>
                     set((state) => {
